@@ -77,6 +77,8 @@ public class Bob extends Personnage {
         if (!isAssome()) {
             // soigne Bob
             GagnerPdv(3);
+            if (this.getPointsDeVie() > 20)
+                this.setPointsDeVie(20);
         }
         else if(isHyponotise()){
             PerdrePdv(1);

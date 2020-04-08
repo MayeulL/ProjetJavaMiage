@@ -30,17 +30,7 @@ public class Dialogue extends SubScene {
         BackgroundImage bgDiloques= new BackgroundImage(new Image(BACKGROUND_IMAGE, 600, 140, false, true)
                 , BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
 
-        Label Text = new Label(text);
-        Text.setMaxWidth(580);
-        Text.setWrapText(true);
-        Text.setPadding(new Insets(10,30,30,30));
-        Text.setTextFill(Color.WHITE);
-        try{
-            Text.setFont(Font.loadFont(new FileInputStream(FONT), 12));
-        } catch (FileNotFoundException e){
-            Text.setFont(Font.loadFont("Verdana", 12));
-        }
-
+        Label Text = createTextZone(text);
 
         AnchorPane Root2 = (AnchorPane) this.getRoot();
         Root2.setBackground(new Background(bgDiloques ));
@@ -74,6 +64,19 @@ public class Dialogue extends SubScene {
         }
 
         transition.play();
+    }
 
+    public Label createTextZone(String text){
+        Label Text = new Label(text);
+        Text.setMaxWidth(580);
+        Text.setWrapText(true);
+        Text.setPadding(new Insets(10,30,30,30));
+        Text.setTextFill(Color.WHITE);
+        try{
+            Text.setFont(Font.loadFont(new FileInputStream(FONT), 12));
+        } catch (FileNotFoundException e){
+            Text.setFont(Font.loadFont("Verdana", 12));
+        }
+        return Text;
     }
 }

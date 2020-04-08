@@ -22,6 +22,7 @@ public class ZexreenView extends Application{
     private static final String SCENE_BACK_GROUND = "file:ressources/maps/Zexreen.png";
     private Zexreen Zexreen;
     private Dialogue DialogueBox;
+    private BattleSceneZex BattleScene;
     public Bob Bob;
 
     public ZexreenView(Bob bob){
@@ -41,6 +42,7 @@ public class ZexreenView extends Application{
         BobInterraction();
         InstanciateCharacters();
         createDialogueZexreen();
+        createBattleScene();
         mouseListener();
 
 
@@ -53,6 +55,11 @@ public class ZexreenView extends Application{
         stage.show();
 
 
+    }
+
+    private void createBattleScene() {
+        BattleScene = new BattleSceneZex(Bob, Zexreen);
+        APane.getChildren().add(BattleScene);
     }
 
     private void InstanciateCharacters() {
@@ -87,6 +94,7 @@ public class ZexreenView extends Application{
                     // trigger the fight
                     Bob.gainObect(2);
                 }
+                BattleScene.showScene();
                 DialogueBox.showDialogue();
                 System.out.println("Zexreen");
             }

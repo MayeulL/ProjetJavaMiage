@@ -9,14 +9,14 @@ public class Zexreen  extends Personnage {
         super(nom, pdv);
     }
 
-    public void YeuxLaser(){
+    public void YeuxLaser(Bob bob){
         // inflige des dégats
-        this.PerdrePdv(2);
+        bob.PerdrePdv(2);
     }
 
-    public void Hypnose(){
+    public void Hypnose(Bob bob){
         // rend Bob confus, la porchaine attaque est redirigée vers Bob
-        this.setHyponotise(true);
+        bob.setHyponotise(true);
     }
 
 }
