@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.FileInputStream;
@@ -27,7 +28,7 @@ public class BattleSceneZex extends SubScene {
     private Label Ammo;
     private Label BobPv;
     private Label ZexPv;
-    private  Label Info;
+    private Label Info;
 
     public BattleSceneZex(Bob bob, Zexreen zex){
         super(new AnchorPane(), 600, 500);
@@ -45,6 +46,7 @@ public class BattleSceneZex extends SubScene {
         createBlasterButton();
         createCDPButton();
         createSoinButton();
+        createOkButton();
 
 
         Root.setBackground(new Background(bg ));
@@ -56,6 +58,26 @@ public class BattleSceneZex extends SubScene {
         System.out.println("yo ");
     }
 
+    private void createOkButton() {
+        CustomButton Ok = new CustomButton("Fin Tour ");
+        Ok.setLayoutX(450);
+        Ok.setLayoutY(350);
+        Root.getChildren().add(Ok);
+
+        Ok.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if (!Bob.isVivant()){
+                    Stage stage = (Stage) Ok.getScene().getWindow();
+                    stage.close();
+                }
+                if(!yourTurn) {
+                    zexreenTurn();
+                }
+            }
+        });
+    }
+
     private void createBlasterButton() {
         CustomButton Blaster = new CustomButton("BLaster");
         Blaster.setLayoutX(50);
@@ -65,10 +87,19 @@ public class BattleSceneZex extends SubScene {
         Blaster.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                Bob.TirBlaster(Zexreen);
-                Bob.setMunitons(Bob.getMunitons()-1);
-                Ammo.setText("Ammo : "+ Bob.getMunitons());
-                ZexPv.setText("Zexreen PV :  " +Zexreen.getPointsDeVie());
+                if(yourTurn) {
+                    if (Bob.isHyponotise()) {
+                        estHyptontise();
+                    } else {
+                        Bob.TirBlaster(Zexreen);
+                        Ammo.setText("Ammo : " + Bob.getMunitons());
+                        ZexPv.setText("Zexreen PV :  " + Zexreen.getPointsDeVie());
+                        Info.setText("Vous avez utilisé Blaster !\n" +
+                                "Zexreen perd 1 par tour pour 2 tours");
+
+                        yourTurn = false;
+                    }
+                }
             }
         });
     }
@@ -81,8 +112,18 @@ public class BattleSceneZex extends SubScene {
         CoupPoing.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                Bob.CoupDePoing(Zexreen);
-                ZexPv.setText("Zexreen PV :  " +Zexreen.getPointsDeVie());
+                if(yourTurn) {
+                    if (Bob.isHyponotise()) {
+                        estHyptontise();
+                    } else {
+                        Bob.CoupDePoing(Zexreen);
+                        ZexPv.setText("Zexreen PV :  " + Zexreen.getPointsDeVie());
+                        Info.setText("Vous avez utilisé Coup de Poing !\n" +
+                                "Zexreen perd 2 points de vie");
+
+                        yourTurn = false;
+                    }
+                }
             }
         });
 
@@ -97,29 +138,54 @@ public class BattleSceneZex extends SubScene {
         Soin.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                Bob.Soins();
-                BobPv.setText("PV :  " +Bob.getPointsDeVie());
-                zexreenTurn();
+                if(yourTurn) {
+                    if (Bob.isHyponotise()){
+                        estHyptontise();
+                    }else {
+                        Bob.Soins();
+                        BobPv.setText("PV :  " + Bob.getPointsDeVie());
+
+                        Info.setText("Vous avez utilisé Soins !\n" +
+                                "Vous gagnez 3 points de vie");
+
+                        yourTurn = false;
+                    }
+                }
             }
         });
 
     }
 
+    public void estHyptontise(){
+        Info.setText("Vous vous blessez avec votre propre action ...");
+        yourTurn = false;
+        Bob.setHyponotise(false);
+    }
+
     public void zexreenTurn(){
         Random rand = new Random();
         int Attack = rand.nextInt(4);
+        System.out.println(Attack);
         // Zexreen a 1 chance sur 4 d'hypnotiser Bob
 //         Sinon il utilise Yeux Laser
-        if (Attack == 4){
+        if (!Zexreen.isVivant()){
+            hideScene();
+        }
+
+        if (Attack == 3){
             Zexreen.Hypnose(Bob);
-            Info.setText("Zexreen a utilisé Hypnose !\n" +
-                    "Vous vous blessez avec votre propre action ...");
+            Info.setText("Zexreen a utilisé Hypnose !\n");
         }else{
             Zexreen.YeuxLaser(Bob);
             Info.setText("Zexreen a utilisé Yeux Laser !\n" +
                     "Vous perdez 2 points de vie");
         }
+
+        Zexreen.Bruler();
+        ZexPv.setText("Zexreen PV :  " +Zexreen.getPointsDeVie());
         BobPv.setText("PV :  " +Bob.getPointsDeVie());
+
+        yourTurn = true;
     }
 
     public void showScene(){
@@ -181,6 +247,7 @@ public class BattleSceneZex extends SubScene {
         Root.getChildren().add(BobPv);
         Root.getChildren().add(ZexPv);
         Root.getChildren().add(Ammo);
+        Root.getChildren().add(Info);
 
     }
 

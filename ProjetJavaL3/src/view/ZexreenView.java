@@ -92,9 +92,18 @@ public class ZexreenView extends Application{
             public void handle(ActionEvent actionEvent) {
                 if (Bob.HasObject(1)) {
                     // trigger the fight
-                    Bob.gainObect(2);
+                    if (Bob.HasObject(2)){
+                        try {
+                            createDialogueZexreen();
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        BattleScene.showScene();
+                        Bob.gainObect(2);
+                    }
                 }
-                BattleScene.showScene();
+
                 DialogueBox.showDialogue();
                 System.out.println("Zexreen");
             }

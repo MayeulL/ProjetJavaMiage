@@ -72,7 +72,15 @@ public class EntreeBibli extends Application{
         btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                Bob.gainObect(4);
+                if (Bob.HasObject(4)){
+                    try {
+                        createDialogueBiblio();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    Bob.gainObect(4);
+                }
                 DialogueBox.showDialogue();
 
                 System.out.println("Akhon");

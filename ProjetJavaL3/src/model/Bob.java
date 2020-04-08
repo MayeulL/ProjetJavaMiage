@@ -36,7 +36,7 @@ public class Bob extends Personnage {
 
     public void TirBlaster(Personnage Ennemi) {
         // s'il n'est pas assomé
-        if (!isAssome()) {
+        if (!isAssome()  && !isHyponotise()) {
             // s'il lui reste des munitions
             if (getMunitons() > 0) {
                 setMunitons(getMunitons() - 1);
@@ -57,7 +57,7 @@ public class Bob extends Personnage {
 
     public void CoupDePoing(Personnage Ennemi) {
         // s'il n'est pas assomé
-        if (!isAssome()) {
+        if (!isAssome()  && !isHyponotise()) {
             // Inflige de bons dégats
             Ennemi.PerdrePdv(2);
         }
@@ -74,7 +74,7 @@ public class Bob extends Personnage {
 
     public void Soins() {
         // s'il n'est pas assomé
-        if (!isAssome()) {
+        if (!isAssome() && !isHyponotise()) {
             // soigne Bob
             GagnerPdv(3);
             if (this.getPointsDeVie() > 20)

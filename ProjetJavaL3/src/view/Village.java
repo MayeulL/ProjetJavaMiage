@@ -102,6 +102,11 @@ public class Village extends Application{
             public void handle(ActionEvent actionEvent) {
                 if(Bob.HasObject(0) && Bob.isRuyeHasSpoken()){
                     Bob.gainObect(1);
+                    try {
+                        createDialogueVillage();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 }else{
                     Bob.setRuyeHasSpoken(true);
                 }
@@ -147,6 +152,11 @@ public class Village extends Application{
             public void handle(ActionEvent actionEvent) {
                 if (Bob.HasObject(2) && Bob.HasObject(3) && Bob.HasObject(4) && Bob.isRistalHasSpoken()){
                     Bob.gainObect(5);
+                    try {
+                        createDialogueVillage();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     Bob.setRistalHasSpoken(true);
                 }

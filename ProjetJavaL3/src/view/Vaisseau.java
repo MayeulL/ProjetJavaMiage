@@ -20,6 +20,7 @@ public class Vaisseau extends Application{
 
     private AnchorPane APane;
     private Dialogue FuseeDialogue;
+    private Dialogue BoxDialogue;
     private static final String SCENE_BACK_GROUND = "file:ressources/maps/Vaisseau.png";
     private boolean FinDuGame = false;
     public Bob Bob;
@@ -68,7 +69,14 @@ public class Vaisseau extends Application{
                     "le remplacer.");
         }
 
+        if (!Bob.HasObject(0)){
+            BoxDialogue = new Dialogue("Vous avez ramassé un peu de ferraille de votre vaisseau");
+        }else {
+            BoxDialogue = new Dialogue("Il n'y a plus rien d'eploitable ici...");
+        }
+
         APane.getChildren().add(FuseeDialogue);
+        APane.getChildren().add(BoxDialogue);
 
     }
 
@@ -120,7 +128,7 @@ public class Vaisseau extends Application{
             @Override
             public void handle(ActionEvent actionEvent) {
                 Bob.gainObect(0);
-//                Bob.gainObect(6);
+                BoxDialogue.showDialogue();
                 System.out.println("Box");
                 System.out.println(Bob.HasObject(0));
             }

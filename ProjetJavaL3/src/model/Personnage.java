@@ -5,6 +5,15 @@ public class Personnage {
     private String Nom;
     private int PointsDeVie;
     private int Brule;
+
+    public boolean isVivant() {
+        return Vivant;
+    }
+
+    public void setVivant(boolean vivant) {
+        Vivant = vivant;
+    }
+
     private boolean Vivant = true;
     private boolean Hyponotise;
 
@@ -32,11 +41,6 @@ public class Personnage {
 
     private void Mourir() {
         this.Vivant = false;
-    }
-
-    //TO DO
-    public String Parler(){
-        return "boop";
     }
 
     public void Bruler(){
