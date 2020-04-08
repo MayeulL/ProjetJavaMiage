@@ -8,7 +8,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.CustomButton;
+import model.Objets;
 import view.Vaisseau;
+import model.Bob;
 
 public class Main extends Application {
 
@@ -18,6 +20,8 @@ public class Main extends Application {
     private AnchorPane mainPane;
     private Scene mainScene;
     private Stage mainStage;
+    public Bob Bob;
+    public Objets Cataliseur;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -30,6 +34,8 @@ public class Main extends Application {
             createExitButton();
             SetTitle();
 
+            InitializeBob();
+
             primaryStage = mainStage;
             primaryStage.show();
 
@@ -37,6 +43,14 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
+
+    private void InitializeBob() {
+        Bob = new Bob("Bob", 20, 5);
+    }
+
+//    public Bob getBob(){
+//        return Bob;
+//    }
 
     private void createPlayButton(){
         CustomButton playButton = new CustomButton("Jouer");
@@ -49,7 +63,7 @@ public class Main extends Application {
             public void handle(ActionEvent actionEvent) {
                 // Instantiate the class that creates a new scene
                 // Call method in newly instantiated class, passing primaryStage to it
-                Vaisseau vaisseauScene = new Vaisseau();
+                Vaisseau vaisseauScene = new Vaisseau(Bob);
                 vaisseauScene.start(mainStage);
             }
         });

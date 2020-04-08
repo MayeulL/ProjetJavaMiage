@@ -1,9 +1,12 @@
 package model;
+import model.Bob;
 
 public class Zexreen  extends Personnage {
 
-    public Zexreen(String nom, int pdv, int posX, int posy) {
-        super(nom, pdv, posX, posy);
+    private String[] Text = new String[3];
+
+    public Zexreen(String nom, int pdv) {
+        super(nom, pdv);
     }
 
     public void YeuxLaser(){
@@ -15,4 +18,5 @@ public class Zexreen  extends Personnage {
         // rend Bob confus, la porchaine attaque est redirigée vers Bob
         this.setHyponotise(true);
     }
+
 }

@@ -9,16 +9,18 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import model.CustomButton;
-import model.Directions;
-import model.InterractionButton;
-import model.Zexreen;
+import model.*;
 import sample.Main;
 
 public class Caverne extends Application{
 
     private AnchorPane APane;
     private static final String SCENE_BACK_GROUND = "file:ressources/maps/Caverne.png";
+    public Bob Bob;
+
+    public Caverne(Bob bob){
+        Bob = bob;
+    }
 
     // This method, when called, will receive the original primary stage
 // on which a new scene will then be attached
@@ -53,7 +55,9 @@ public class Caverne extends Application{
         btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                //trigger the fight
                 System.out.println("cata");
+                Bob.gainObect(3);
             }
         });
     }
@@ -80,6 +84,7 @@ public class Caverne extends Application{
         btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                System.out.println("GRAAAOOUU !");
                 System.out.println("Chmdak");
             }
         });
@@ -97,7 +102,7 @@ public class Caverne extends Application{
                 // Instantiate the class that creates a new scene
                 // Call method in newly instantiated class, passing primaryStage to it
 
-                ZexreenView zexreenScene = new ZexreenView();
+                ZexreenView zexreenScene = new ZexreenView(Bob);
                 Stage CurentStage = (Stage) APane.getScene().getWindow();
                 try {
                     zexreenScene.start(CurentStage);

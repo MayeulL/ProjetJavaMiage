@@ -5,17 +5,33 @@ import java.util.List;
 public class Bob extends Personnage {
 
     private int Munitons;
-    private List<Objets> Inventaire;
+    private boolean[] Inventaire = new boolean[7];
     private boolean Assome;
 
-    public Bob(String nom, int pdv, int posX, int posy, int mun) {
-        super(nom, pdv, posX, posy);
+
+    private boolean RistalHasSpoken = false;
+    private boolean RuyeHasSpoken = false;
+
+    public Bob(String nom, int pdv, int mun) {
+        super(nom, pdv);
         Munitons = mun;
+        InstanciateInventaire();
     }
 
+    private void InstanciateInventaire() {
+        //Sac de fer = 0, Carburium = 1;, Recipient = 2, Cataliseur = 3,
+        // recette = 4, Carburant Complet = 5, Guide démarage = 6
+        for (int i = 0; i<Inventaire.length; i++) {
+            Inventaire[i] = false;
+        }
+    }
     // TO DO
     public void Inventaire() {
         // ouvre l'inventaire
+    }
+
+    public void gainObect(int Id){
+        Inventaire[Id] = true;
     }
 
     public void TirBlaster(Personnage Ennemi) {
@@ -72,8 +88,8 @@ public class Bob extends Personnage {
     }
     }
 
-    public boolean HasObject(Objets obj) {
-        if (Inventaire.contains(obj))
+    public boolean HasObject(int obj) {
+        if (Inventaire[obj])
             return true;
         else
             return false;
@@ -93,5 +109,20 @@ public class Bob extends Personnage {
 
     public void setAssome(boolean assome) {
         Assome = assome;
+    }
+    public boolean isRistalHasSpoken() {
+        return RistalHasSpoken;
+    }
+
+    public void setRistalHasSpoken(boolean ristalHasSpoken) {
+        RistalHasSpoken = ristalHasSpoken;
+    }
+
+    public boolean isRuyeHasSpoken() {
+        return RuyeHasSpoken;
+    }
+
+    public void setRuyeHasSpoken(boolean ruyeHasSpoken) {
+        RuyeHasSpoken = ruyeHasSpoken;
     }
 }

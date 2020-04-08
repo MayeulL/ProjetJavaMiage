@@ -9,9 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import model.CustomButton;
-import model.Directions;
-import model.InterractionButton;
+import model.*;
 import sample.Main;
 
 public class ZexreenView extends Application{
@@ -19,6 +17,12 @@ public class ZexreenView extends Application{
     private AnchorPane APane;
     private Stage CurentStage;
     private static final String SCENE_BACK_GROUND = "file:ressources/maps/Zexreen.png";
+    private Zexreen Zexreen;
+    public Bob Bob;
+
+    public ZexreenView(Bob bob){
+        Bob = bob;
+    }
 
     // This method, when called, will receive the original primary stage
 // on which a new scene will then be attached
@@ -32,6 +36,7 @@ public class ZexreenView extends Application{
         chmdakButton();
         ZexreenInterraction();
         BobInterraction();
+        InstanciateCharacters();
         mouseListener();
 
 
@@ -46,6 +51,11 @@ public class ZexreenView extends Application{
 
     }
 
+    private void InstanciateCharacters() {
+        Zexreen = new Zexreen("Zexreen", 20);
+
+    }
+
     private void ZexreenInterraction() {
         InterractionButton btn = new InterractionButton("Zexreen", 112, 160);
         btn.setLayoutX(530);
@@ -55,6 +65,16 @@ public class ZexreenView extends Application{
         btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                if (Bob.HasObject(1)){
+                    System.out.println("Quoi  un récipient pour ton carburant? Haha jamais je te le donnerais! Tiens prend ça !");
+                    // trigger the fight
+                    Bob.gainObect(2);
+                } else if(Bob.HasObject(2)){
+                    System.out.println("AIE AIE AIE Ok ! Tiens voilà le récipient et maintenant hors de ma vue !");
+                }
+                else {
+                    System.out.println("D'où tu viens toi ? Passe ton chemin étranger si tu veux rester en vie !");
+                }
                 System.out.println("Zexreen");
             }
         });
@@ -93,7 +113,7 @@ public class ZexreenView extends Application{
             public void handle(ActionEvent actionEvent) {
                 // Instantiate the class that creates a new scene
                 // Call method in newly instantiated class, passing primaryStage to it
-                Vaisseau vaisseauScene = new Vaisseau();
+                Vaisseau vaisseauScene = new Vaisseau(Bob);
                 CurentStage = (Stage) APane.getScene().getWindow();
                 try {
                     vaisseauScene.start(CurentStage);
@@ -115,7 +135,7 @@ public class ZexreenView extends Application{
             public void handle(ActionEvent actionEvent) {
                 // Instantiate the class that creates a new scene
                 // Call method in newly instantiated class, passing primaryStage to it
-                Caverne caverneScene = new Caverne();
+                Caverne caverneScene = new Caverne(Bob);
                 CurentStage = (Stage) APane.getScene().getWindow();
                 try {
                     caverneScene.start(CurentStage);

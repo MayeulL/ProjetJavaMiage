@@ -9,19 +9,21 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import model.CustomButton;
-import model.Directions;
-import model.InterractionButton;
-import model.Zexreen;
+import model.*;
 import sample.Main;
 
 public class Vaisseau extends Application{
 
     private AnchorPane APane;
     private static final String SCENE_BACK_GROUND = "file:ressources/maps/Vaisseau.png";
+    public Bob Bob;
+
+    public Vaisseau(Bob bob){
+        Bob = bob;
+    }
 
     // This method, when called, will receive the original primary stage
-// on which a new scene will then be attached
+    // on which a new scene will then be attached
     public void start(Stage stage)
     {
         Label lbl = new Label("Zone 1 - Vaisseau.");
@@ -56,7 +58,13 @@ public class Vaisseau extends Application{
         btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                System.out.println("Bob !");
+
+                if (Bob.HasObject(3)){
+                    System.out.println("cataliseur !");
+                }else {
+                    System.out.println("Bob !");
+                }
+
             }
         });
     }
@@ -84,7 +92,10 @@ public class Vaisseau extends Application{
         btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                Bob.gainObect(0);
+//                Bob.gainObect(6);
                 System.out.println("Box");
+                System.out.println(Bob.HasObject(0));
             }
         });
     }
@@ -103,7 +114,7 @@ public class Vaisseau extends Application{
                 // Instantiate the class that creates a new scene
                 // Call method in newly instantiated class, passing primaryStage to it
 
-                Village villageScene = new Village();
+                Village villageScene = new Village(Bob);
                 Stage CurentStage = (Stage) APane.getScene().getWindow();
                 try {
                     villageScene.start(CurentStage);
@@ -135,7 +146,7 @@ public class Vaisseau extends Application{
                 // Instantiate the class that creates a new scene
                 // Call method in newly instantiated class, passing primaryStage to it
 
-                ZexreenView zexreenScene = new ZexreenView();
+                ZexreenView zexreenScene = new ZexreenView(Bob);
                 Stage CurentStage = (Stage) APane.getScene().getWindow();
                 try {
                     zexreenScene.start(CurentStage);

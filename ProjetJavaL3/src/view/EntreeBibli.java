@@ -19,6 +19,11 @@ public class EntreeBibli extends Application{
 
     private AnchorPane APane;
     private static final String SCENE_BACK_GROUND = "file:ressources/maps/Bibliotheque.png";
+    public Bob Bob;
+
+    public EntreeBibli(Bob bob){
+        Bob = bob;
+    }
 
     // This method, when called, will receive the original primary stage
 // on which a new scene will then be attached
@@ -53,6 +58,14 @@ public class EntreeBibli extends Application{
         btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                if (Bob.HasObject(4)){
+                    System.out.println("Bon retour !");
+                } else {
+                    System.out.println("Bien le bonjour. Oui tout à fait j'ai ce qu'il te faut il me semble ... Laisse moi fouiller ce \n" +
+                            "tas de feuille... Ah ! La voilà! J'espère qu vous réeussirez sans encombre à repartir !");
+                    Bob.gainObect(4);
+                }
+
                 System.out.println("Akhon");
             }
         });
@@ -93,7 +106,7 @@ public class EntreeBibli extends Application{
                 // Instantiate the class that creates a new scene
                 // Call method in newly instantiated class, passing primaryStage to it
 
-                Village villageScene = new Village();
+                Village villageScene = new Village(Bob);
                 Stage CurentStage = (Stage) APane.getScene().getWindow();
                 try {
                     villageScene.start(CurentStage);

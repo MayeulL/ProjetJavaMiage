@@ -5,7 +5,7 @@ public class Chmdak extends Personnage {
     private boolean Enrage = false;
 
     public Chmdak(String nom, int pdv, int posX, int posy) {
-        super(nom, pdv, posX, posy);
+        super(nom, pdv);
     }
 
     public boolean isEnrage() {

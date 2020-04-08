@@ -7,14 +7,10 @@ public class Personnage {
     private int Brule;
     private boolean Vivant = true;
     private boolean Hyponotise;
-    private int PosX;
-    private int PosY;
 
-    public Personnage(String nom, int pdv, int posX, int posy){
+    public Personnage(String nom, int pdv){
         Nom = nom;
         PointsDeVie = pdv;
-        PosX = posX;
-        PosY = posy;
     }
 
     public String getNom() {
@@ -56,14 +52,6 @@ public class Personnage {
         return PointsDeVie;
     }
 
-    public int getPosX() {
-        return PosX;
-    }
-
-    public int getPosY() {
-        return PosY;
-    }
-
     public int getBrule() {
         return Brule;
     }
@@ -74,14 +62,6 @@ public class Personnage {
 
     public void setPointsDeVie(int pointsDeVie) {
         PointsDeVie = pointsDeVie;
-    }
-
-    public void setPosX(int posX) {
-        PosX = posX;
-    }
-
-    public void setPosY(int posY) {
-        PosY = posY;
     }
 
     public boolean isHyponotise() {
