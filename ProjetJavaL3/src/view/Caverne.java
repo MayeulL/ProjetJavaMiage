@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -12,10 +13,13 @@ import javafx.stage.Stage;
 import model.*;
 import sample.Main;
 
+import java.io.FileNotFoundException;
+
 public class Caverne extends Application{
 
     private AnchorPane APane;
     private static final String SCENE_BACK_GROUND = "file:ressources/maps/Caverne.png";
+    private Dialogue DialogueBox;
     public Bob Bob;
 
     public Caverne(Bob bob){
@@ -24,8 +28,7 @@ public class Caverne extends Application{
 
     // This method, when called, will receive the original primary stage
 // on which a new scene will then be attached
-    public void start(Stage stage)
-    {
+    public void start(Stage stage) throws FileNotFoundException {
         Label lbl = new Label("Zone 6 - Caverne du Chmdak.");
         APane = new AnchorPane();
         APane.getChildren().add(lbl);
@@ -39,11 +42,22 @@ public class Caverne extends Application{
         mouseListener();
         chmdakInterraction();
         cataInterraction();
+        createDialogueChmdak();
         BobInterraction();
+
 
         Scene scene = new Scene(APane, 1280, 720);
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void createDialogueChmdak() throws FileNotFoundException {
+
+            DialogueBox = new Dialogue("GRAAAOUUU !! ");
+
+
+        APane.getChildren().add(DialogueBox);
+
     }
 
     private void cataInterraction() {
@@ -61,6 +75,7 @@ public class Caverne extends Application{
             }
         });
     }
+
     private void BobInterraction() {
         InterractionButton btn = new InterractionButton("Bob", 91, 144);
         btn.setLayoutX(1060);
@@ -84,7 +99,7 @@ public class Caverne extends Application{
         btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                System.out.println("GRAAAOOUU !");
+               DialogueBox.showDialogue();
                 System.out.println("Chmdak");
             }
         });
@@ -117,6 +132,7 @@ public class Caverne extends Application{
         APane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+                DialogueBox.hideDialogue();
                 System.out.println("X: "+mouseEvent.getX()+", Y: "+ mouseEvent.getY());
             }
         });

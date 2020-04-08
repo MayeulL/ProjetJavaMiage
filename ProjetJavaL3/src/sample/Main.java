@@ -12,6 +12,8 @@ import model.Objets;
 import view.Vaisseau;
 import model.Bob;
 
+import java.io.FileNotFoundException;
+
 public class Main extends Application {
 
     private static final int HAUTEUR = 600;
@@ -64,7 +66,11 @@ public class Main extends Application {
                 // Instantiate the class that creates a new scene
                 // Call method in newly instantiated class, passing primaryStage to it
                 Vaisseau vaisseauScene = new Vaisseau(Bob);
-                vaisseauScene.start(mainStage);
+                try {
+                    vaisseauScene.start(mainStage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

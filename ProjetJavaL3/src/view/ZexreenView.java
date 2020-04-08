@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -12,12 +13,15 @@ import javafx.stage.Stage;
 import model.*;
 import sample.Main;
 
+import java.io.FileNotFoundException;
+
 public class ZexreenView extends Application{
 
     private AnchorPane APane;
     private Stage CurentStage;
     private static final String SCENE_BACK_GROUND = "file:ressources/maps/Zexreen.png";
     private Zexreen Zexreen;
+    private Dialogue DialogueBox;
     public Bob Bob;
 
     public ZexreenView(Bob bob){
@@ -26,8 +30,7 @@ public class ZexreenView extends Application{
 
     // This method, when called, will receive the original primary stage
 // on which a new scene will then be attached
-    public void start(Stage stage)
-    {
+    public void start(Stage stage) throws FileNotFoundException {
         Label lbl = new Label("Zone 5 - Camps de Zexreen.");
         APane = new AnchorPane();
         APane.getChildren().add(lbl);
@@ -37,6 +40,7 @@ public class ZexreenView extends Application{
         ZexreenInterraction();
         BobInterraction();
         InstanciateCharacters();
+        createDialogueZexreen();
         mouseListener();
 
 
@@ -56,6 +60,20 @@ public class ZexreenView extends Application{
 
     }
 
+    private void createDialogueZexreen() throws FileNotFoundException {
+        if (Bob.HasObject(1) && !Bob.HasObject(2)){
+            DialogueBox = new Dialogue("Quoi  un récipient pour ton carburant? Haha jamais je te le donnerais! Tiens prend ça !");
+        } else if(Bob.HasObject(2)){
+            DialogueBox = new Dialogue("AIE AIE AIE Ok ! Tiens voilà le récipient et maintenant hors de ma vue !");
+        }
+        else {
+            DialogueBox = new Dialogue("D'où tu viens toi ? Passe ton chemin étranger si tu veux rester en vie !");
+        }
+
+        APane.getChildren().add(DialogueBox);
+
+    }
+
     private void ZexreenInterraction() {
         InterractionButton btn = new InterractionButton("Zexreen", 112, 160);
         btn.setLayoutX(530);
@@ -65,16 +83,11 @@ public class ZexreenView extends Application{
         btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                if (Bob.HasObject(1)){
-                    System.out.println("Quoi  un récipient pour ton carburant? Haha jamais je te le donnerais! Tiens prend ça !");
+                if (Bob.HasObject(1)) {
                     // trigger the fight
                     Bob.gainObect(2);
-                } else if(Bob.HasObject(2)){
-                    System.out.println("AIE AIE AIE Ok ! Tiens voilà le récipient et maintenant hors de ma vue !");
                 }
-                else {
-                    System.out.println("D'où tu viens toi ? Passe ton chemin étranger si tu veux rester en vie !");
-                }
+                DialogueBox.showDialogue();
                 System.out.println("Zexreen");
             }
         });
@@ -98,6 +111,7 @@ public class ZexreenView extends Application{
         APane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+                DialogueBox.hideDialogue();
                 System.out.println("X: "+mouseEvent.getX()+", Y: "+ mouseEvent.getY());
             }
         });
