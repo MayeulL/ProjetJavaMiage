@@ -72,7 +72,7 @@ public class Vaisseau extends Application{
         if (!Bob.HasObject(0)){
             BoxDialogue = new Dialogue("Vous avez ramassé un peu de ferraille de votre vaisseau");
         }else {
-            BoxDialogue = new Dialogue("Il n'y a plus rien d'eploitable ici...");
+            BoxDialogue = new Dialogue("Il n'y a plus rien d'exploitable ici...");
         }
 
         APane.getChildren().add(FuseeDialogue);
@@ -127,7 +127,15 @@ public class Vaisseau extends Application{
         btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                Bob.gainObect(0);
+                if (!Bob.HasObject(0)){
+                    Bob.gainObect(0);
+                } else {
+                    try {
+                        createDialoguePanel();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
                 BoxDialogue.showDialogue();
                 System.out.println("Box");
                 System.out.println(Bob.HasObject(0));
@@ -165,6 +173,7 @@ public class Vaisseau extends Application{
             @Override
             public void handle(MouseEvent mouseEvent) {
                 FuseeDialogue.hideDialogue();
+                BoxDialogue.hideDialogue();
 
                 System.out.println("X: "+mouseEvent.getX()+", Y: "+ mouseEvent.getY());
                 if (FinDuGame){

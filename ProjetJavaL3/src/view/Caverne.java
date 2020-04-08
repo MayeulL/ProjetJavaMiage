@@ -20,7 +20,10 @@ public class Caverne extends Application{
     private AnchorPane APane;
     private static final String SCENE_BACK_GROUND = "file:ressources/maps/Caverne.png";
     private Dialogue DialogueBox;
+    private Dialogue DialogueBoxChmdak;
+    private BattleSceneChmdak BattleScene;
     public Bob Bob;
+    public Chmdak Chmdak;
 
     public Caverne(Bob bob){
         Bob = bob;
@@ -37,13 +40,15 @@ public class Caverne extends Application{
                 , BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
         APane.setBackground(new Background(Bg));
 
-
+        Chmdak = new Chmdak("Chmdak", 20);
         zexreenButton();
         mouseListener();
         chmdakInterraction();
         cataInterraction();
         createDialogueChmdak();
+        createBattleScene();
         BobInterraction();
+
 
 
         Scene scene = new Scene(APane, 1280, 720);
@@ -51,14 +56,30 @@ public class Caverne extends Application{
         stage.show();
     }
 
+    private void createBattleScene() {
+        BattleScene = new BattleSceneChmdak(Bob, Chmdak);
+        APane.getChildren().add(BattleScene);
+    }
+
     private void createDialogueChmdak() throws FileNotFoundException {
 
+        if(!Bob.HasObject(3)){
             DialogueBox = new Dialogue("GRAAAOUUU !! ");
+        }else{
+            DialogueBox = new Dialogue("Vous ramasser non sans dégoût le fameux cataliseur");
+        }
+
+        DialogueBoxChmdak = new Dialogue("Graou... !");
+
 
 
         APane.getChildren().add(DialogueBox);
+        APane.getChildren().add(DialogueBoxChmdak);
 
     }
+
+
+
 
     private void cataInterraction() {
         InterractionButton btn = new InterractionButton("Cata", 250, 182);
@@ -70,8 +91,18 @@ public class Caverne extends Application{
             @Override
             public void handle(ActionEvent actionEvent) {
                 //trigger the fight
-                System.out.println("cata");
-                Bob.gainObect(3);
+                if (!Bob.HasObject(3)){
+                    Bob.gainObect(3);
+                    BattleScene.showScene();
+                    DialogueBox.showDialogue();
+                }else{
+                    try {
+                        createDialogueChmdak();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+
             }
         });
     }
@@ -99,7 +130,7 @@ public class Caverne extends Application{
         btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-               DialogueBox.showDialogue();
+               DialogueBoxChmdak.showDialogue();
                 System.out.println("Chmdak");
             }
         });
@@ -133,6 +164,7 @@ public class Caverne extends Application{
             @Override
             public void handle(MouseEvent mouseEvent) {
                 DialogueBox.hideDialogue();
+                DialogueBoxChmdak.hideDialogue();
                 System.out.println("X: "+mouseEvent.getX()+", Y: "+ mouseEvent.getY());
             }
         });
